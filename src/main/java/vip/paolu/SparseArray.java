@@ -17,6 +17,7 @@ public class SparseArray {
         sparseArray.initArray();
         sparseArray.showArray();
         sparseArray.initSparseArray();
+        sparseArray.recovery();
     }
 
     /**
@@ -34,6 +35,7 @@ public class SparseArray {
      * 遍历数组
      */
     public void showArray() {
+        System.out.println("原数组:");
         for (int[] array : array) {
             for (int item : array) {
                 System.out.printf("%4d", item);
@@ -74,6 +76,7 @@ public class SparseArray {
         }
 
         //遍历稀疏数组
+        System.out.println("稀疏数组:");
         System.out.printf("%-5s%-5s%-5s", "row", "col", "val");
         System.out.println();
         for (int[] array : sparseArray) {
@@ -84,4 +87,27 @@ public class SparseArray {
         }
     }
 
+    /**
+     * 恢复数组
+     */
+    public void recovery() {
+        int row = sparseArray[0][0];
+        int col = sparseArray[0][1];
+        int diff = sparseArray[0][2];
+        int[][] list = new int[row][col];
+
+        for (int i = 1; i < sparseArray.length; i++) {
+            list[sparseArray[i][0]][sparseArray[i][1]] = sparseArray[i][2];
+
+        }
+
+        //遍历数组
+        System.out.println("恢复数组:");
+        for (int[] array : list) {
+            for (int item : array) {
+                System.out.printf("%4d", item);
+            }
+            System.out.println();
+        }
+    }
 }
