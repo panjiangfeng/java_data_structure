@@ -1,4 +1,4 @@
-package vip.paolu;
+package vip.paolu.t01;
 
 /**
  * Description: 稀疏数组
