@@ -1,7 +1,7 @@
 package vip.paolu.t03;
 
 /**
- * Description:
+ * Description: 单链表
  * User: Pan
  * Date: 2023-02-16-19:15
  */
@@ -11,6 +11,7 @@ public class LinkListDemo {
         linkList.add(new LinkNode(1, "孙悟空"));
         linkList.add(new LinkNode(2, "猪八戒"));
         linkList.add(new LinkNode(4, "小白龙"));
+        linkList.getByLast(1);
         linkList.addByOrder(new LinkNode(3, "沙僧"));
         linkList.update(4, "哈哈哈");
         linkList.update(1, "嘻嘻嘻");
@@ -21,6 +22,7 @@ public class LinkListDemo {
             linkList.delete(2);
             linkList.delete(2);
             linkList.showAll();
+            linkList.getByLast(1);
             System.out.println(linkList.getValidCount());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -31,8 +33,14 @@ public class LinkListDemo {
 }
 
 class LinkList {
-    private LinkNode head = new LinkNode(0, "");
 
+    private LinkNode head = new LinkNode(0, "");//头节点
+
+    /**
+     * 添加节点
+     *
+     * @param node
+     */
     public void add(LinkNode node) {
         LinkNode temp = this.head;
         while (true) {
@@ -45,6 +53,11 @@ class LinkList {
 
     }
 
+    /**
+     * 顺序添加节点
+     *
+     * @param node
+     */
     public void addByOrder(LinkNode node) {
         if (node.id <= 0) {
             System.out.println("输入节点错误");
@@ -66,6 +79,9 @@ class LinkList {
         temp.next = node;
     }
 
+    /**
+     * 展示所有节点
+     */
     public void showAll() {
         LinkNode temp = this.head.next;
         while (true) {
@@ -78,6 +94,12 @@ class LinkList {
         }
     }
 
+    /**
+     * 删除节点
+     *
+     * @param index
+     * @return
+     */
     public LinkNode delete(int index) {
         LinkNode temp = this.head;
         if (index <= 0) {
@@ -95,6 +117,12 @@ class LinkList {
         return result;
     }
 
+    /**
+     * 更新节点
+     *
+     * @param index
+     * @param name
+     */
     public void update(int index, String name) {
         if (index <= 0) {
             System.out.println("该节点不存在");
@@ -117,6 +145,11 @@ class LinkList {
 
     }
 
+    /**
+     * 获取链表有效数量(不包括头结点)
+     *
+     * @return
+     */
     public int getValidCount() {
         int count = 0;
         LinkNode temp = this.head;
@@ -125,6 +158,23 @@ class LinkList {
             count++;
         }
         return count;
+    }
+
+    /**
+     * 获取倒数第几个值
+     *
+     * @param index
+     */
+    public void getByLast(int index) {
+        LinkNode temp = this.head;
+        int size = this.getValidCount();
+        for (int i = 0; i <= size - index; i++) {
+            if (temp.next == null) {
+                break;
+            }
+            temp = temp.next;
+        }
+        System.out.println(temp);
     }
 
 }
