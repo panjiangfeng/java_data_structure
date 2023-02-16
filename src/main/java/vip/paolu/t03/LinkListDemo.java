@@ -28,6 +28,8 @@ public class LinkListDemo {
         //    System.out.println(e.getMessage());
         //}
         linkList.reverseList();
+        System.out.println("==============");
+        linkList.showAll();
 
     }
 }
@@ -187,8 +189,7 @@ class LinkList {
             temp.next = x.next;
             linkList.head.next = temp;
         }
-        //todo:暂时无法把this指向linklist,不会哈哈哈  后续来补
-        linkList.showAll();
+        this.head.next = linkList.head.next;
     }
 }
 
