@@ -11,23 +11,23 @@ public class LinkListDemo {
         linkList.add(new LinkNode(1, "孙悟空"));
         linkList.add(new LinkNode(2, "猪八戒"));
         linkList.add(new LinkNode(4, "小白龙"));
-        linkList.getByLast(1);
+        //linkList.getByLast(1);
         linkList.addByOrder(new LinkNode(3, "沙僧"));
-        linkList.update(4, "哈哈哈");
-        linkList.update(1, "嘻嘻嘻");
+        //linkList.update(4, "哈哈哈");
+        //linkList.update(1, "嘻嘻嘻");
         linkList.showAll();
-        System.out.println(linkList.getValidCount());
-        try {
-            linkList.delete(2);
-            linkList.delete(2);
-            linkList.delete(2);
-            linkList.showAll();
-            linkList.getByLast(1);
-            System.out.println(linkList.getValidCount());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
+        //System.out.println(linkList.getValidCount());
+        //try {
+        //    linkList.delete(2);
+        //    linkList.delete(2);
+        //    linkList.delete(2);
+        //    linkList.showAll();
+        //    linkList.getByLast(1);
+        //    System.out.println(linkList.getValidCount());
+        //} catch (Exception e) {
+        //    System.out.println(e.getMessage());
+        //}
+        linkList.reverseList();
 
     }
 }
@@ -177,6 +177,19 @@ class LinkList {
         System.out.println(temp);
     }
 
+    public void reverseList() {
+        LinkList linkList = new LinkList(); //新链表
+        LinkNode temp; //永远指向原链表第一个有效值
+        LinkNode x = linkList.head; //永远指向新链表第一个有效值
+        while (head.next != null) {
+            temp = head.next;
+            this.head.next = temp.next;
+            temp.next = x.next;
+            linkList.head.next = temp;
+        }
+        //todo:暂时无法把this指向linklist,不会哈哈哈  后续来补
+        linkList.showAll();
+    }
 }
 
 class LinkNode {
