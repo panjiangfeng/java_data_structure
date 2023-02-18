@@ -10,7 +10,7 @@ public class CircleSingleLinkedListDemo {
         CircleSingleLinkedList list = new CircleSingleLinkedList();
         list.add(5);
         //list.showAll();
-        list.outByOrder(2, 3);
+        list.outByOrder(1, 2);
 
     }
 }
@@ -70,6 +70,7 @@ class CircleSingleLinkedList {
         CircleSingleLinkedNode preOut = first;//指向出圈前一个节点
         while (true) {
             if (preOut.getNext() == first) {
+
                 break;
             }
 
@@ -82,6 +83,7 @@ class CircleSingleLinkedList {
         while (true) {
             if (out == preOut) {
                 //已经只剩一个了
+                System.out.println("出圈人是" + out.getNo());
                 break;
             } else {
                 for (int i = 0; i < countNum - 1; i++) {
