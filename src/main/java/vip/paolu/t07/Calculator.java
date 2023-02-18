@@ -1,4 +1,4 @@
-package vip.paolu;
+package vip.paolu.t07;
 
 
 import vip.paolu.t06.ArrayStack;
