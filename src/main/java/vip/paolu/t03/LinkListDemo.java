@@ -1,7 +1,7 @@
 package vip.paolu.t03;
 
 /**
- * Description: 单链表
+ * Description: 带头节点单链表
  * User: Pan
  * Date: 2023-02-16-19:15
  */
