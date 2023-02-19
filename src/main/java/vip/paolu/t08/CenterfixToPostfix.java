@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * Description: 中缀转后缀
+ * Description: 实现中缀转后缀
  * User: Pan
  * Date: 2023-02-19-15:25
  */
@@ -32,10 +32,20 @@ public class CenterfixToPostfix {
         System.out.println("结果是" + AgainstPoland.calculate(centerfixToPostfix.getS2()));
     }
 
+    /**
+     * 初始化表达式
+     *
+     * @param expression
+     */
     public CenterfixToPostfix(String expression) {
         this.expression = expression;
     }
 
+    /**
+     * 格式化中缀表达式到s2
+     *
+     * @param expressionList
+     */
     public void parseExpression(List<String> expressionList) {
         //（2）从左到右扫描中缀表达式
         for (int i = 0; i < expressionList.size(); i++) {
@@ -69,10 +79,20 @@ public class CenterfixToPostfix {
         }
     }
 
+    /**
+     * 获取s2表达式集合
+     *
+     * @return
+     */
     public List<String> getS2() {
         return s2;
     }
 
+    /**
+     * 中缀字符串转表达式
+     *
+     * @return
+     */
     public List<String> getCenterExpressionList() {
         int index = 0;//定位
         ArrayList<String> centerExpressionList = new ArrayList<>();
@@ -98,6 +118,12 @@ public class CenterfixToPostfix {
         return centerExpressionList;
     }
 
+    /**
+     * 获取优先级
+     *
+     * @param ch
+     * @return
+     */
     public int getPriorValue(char ch) {
         int val = 0;//优先级别  0最小
         switch (ch) {
