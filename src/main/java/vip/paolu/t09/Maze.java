@@ -1,12 +1,12 @@
 package vip.paolu.t09;
 
 /**
- * Description:
+ * Description: 递归实现迷宫回溯
  * User: Pan
  * Date: 2023-02-21-19:53
  */
 public class Maze {
-    private int[][] map = new int[8][7];
+    private int[][] map = new int[8][7];  //8*7的地图
     private int count;//走过的步数
 
     public static void main(String[] args) {
@@ -20,6 +20,9 @@ public class Maze {
 
     }
 
+    /**
+     * 放置障碍物
+     */
     public void addObstacle() {
         //左右
         for (int i = 0; i < 7; i++) {
@@ -35,6 +38,9 @@ public class Maze {
         map[3][2] = 1;
     }
 
+    /**
+     * 展示地图
+     */
     public void showMap() {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
@@ -44,7 +50,13 @@ public class Maze {
         }
     }
 
-
+    /**
+     * 寻找路线
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     public boolean setWay(int x, int y) {
         //终点 6 5
         if (map[6][5] == 2) {
