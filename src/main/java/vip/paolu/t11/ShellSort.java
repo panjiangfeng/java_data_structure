@@ -1,9 +1,7 @@
 package vip.paolu.t11;
 
-import java.util.Arrays;
-
 /**
- * Description:希尔
+ * Description:希尔排序
  * User: Pan
  * Date: 2023-03-14-22:32
  */
@@ -17,12 +15,40 @@ public class ShellSort {
         }
         long begin = System.nanoTime();
         arr = sort(arr);
-        System.out.println(Arrays.toString(arr));
+        //System.out.println(Arrays.toString(arr));
         long end = System.nanoTime();
         System.out.println(end - begin);
     }
 
+    /**
+     * @param arr
+     * @return
+     */
     public static int[] sort(int[] arr) {
+        int length = arr.length;
+        int temp;
+        for (int gap = length / 2; gap > 0; gap /= 2) {
+            for (int i = gap; i < length; i++) {
+                int j = i;
+                temp = arr[j];
+                while (j - gap >= 0 && temp < arr[j - gap]) {
+                    arr[j] = arr[j - gap];
+                    j -= gap;
+                }
+                arr[j] = temp;
+            }
+        }
+        return arr;
+    }
+
+
+    /**
+     * 这是冒泡实现的希尔排序,不行
+     *
+     * @param arr
+     * @return
+     */
+    public static int[] flawSort(int[] arr) {
         int length = arr.length;
         int temp;
         for (int gap = length / 2; gap > 0; gap /= 2) {
