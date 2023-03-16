@@ -33,7 +33,7 @@ public class QuickSort {
         }
         int l = left;
         int r = right;
-        int pivot = arr[left];
+        int pivot = arr[(left + right) / 2];
         int temp;
         while (l < r) {
             while (l < r && arr[r] >= pivot) {
