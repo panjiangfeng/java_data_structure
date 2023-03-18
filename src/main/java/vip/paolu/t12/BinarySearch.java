@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class BinarySearch {
     public static void main(String[] args) {
-        int[] nums = {1, 1, 5, 6, 9, 11, 11, 123, 532, 555};
+        int[] nums = {1, 1, 1, 1, 1, 1, 5, 6, 9, 11, 11, 123, 532, 555};
         //int index = getIndex(nums, 11, 0, nums.length - 1);
         List<Integer> list = getMultipleIndex(nums, 1, 0, nums.length - 1);
         System.out.println(list);
