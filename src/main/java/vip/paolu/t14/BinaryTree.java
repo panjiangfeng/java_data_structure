@@ -27,27 +27,33 @@ public class BinaryTree {
         //System.out.println("后序遍历：");
         //binaryTree.showByLatter();
         //第二阶段使用
-        System.out.println("前序遍历查找：");//4次
-        Node resNode = binaryTree.getNodeByPre(5);
-        if (resNode != null) {
-            System.out.printf("已找到 no=%d name=%s\n", resNode.getNo(), resNode.getName());
-        } else {
-            System.out.printf("没有找到 no = %d 的英雄\n", 5);
-        }
-        System.out.println("中序遍历查找：");//3次
-        resNode = binaryTree.getNodeByCenter(5);
-        if (resNode != null) {
-            System.out.printf("已找到 no=%d name=%s\n", resNode.getNo(), resNode.getName());
-        } else {
-            System.out.printf("没有找到 no = %d 的英雄\n", 5);
-        }
-        System.out.println("后序遍历查找：");//2次
-        resNode = binaryTree.getNodeByLatter(5);
-        if (resNode != null) {
-            System.out.printf("已找到 no=%d name=%s\n", resNode.getNo(), resNode.getName());
-        } else {
-            System.out.printf("没有找到 no = %d 的英雄\n", 5);
-        }
+        //System.out.println("前序遍历查找：");//4次
+        //Node resNode = binaryTree.getNodeByPre(5);
+        //if (resNode != null) {
+        //    System.out.printf("已找到 no=%d name=%s\n", resNode.getNo(), resNode.getName());
+        //} else {
+        //    System.out.printf("没有找到 no = %d 的英雄\n", 5);
+        //}
+        //System.out.println("中序遍历查找：");//3次
+        //resNode = binaryTree.getNodeByCenter(5);
+        //if (resNode != null) {
+        //    System.out.printf("已找到 no=%d name=%s\n", resNode.getNo(), resNode.getName());
+        //} else {
+        //    System.out.printf("没有找到 no = %d 的英雄\n", 5);
+        //}
+        //System.out.println("后序遍历查找：");//2次
+        //resNode = binaryTree.getNodeByLatter(5);
+        //if (resNode != null) {
+        //    System.out.printf("已找到 no=%d name=%s\n", resNode.getNo(), resNode.getName());
+        //} else {
+        //    System.out.printf("没有找到 no = %d 的英雄\n", 5);
+        //}
+        //第三阶段使用
+        System.out.println("删除前：");
+        binaryTree.showByPre();
+        binaryTree.deleteNode(5);
+        System.out.println("删除后：");
+        binaryTree.showByPre();
     }
 
     private Node root;
@@ -57,6 +63,24 @@ public class BinaryTree {
     }
 
     public BinaryTree() {
+    }
+
+    /**
+     * 二叉树节点删除:
+     * 注意此处删除规则是:  如果是叶子节点直接删除,如果不是叶子节点,那就删除整个子树  没错  逻辑就是这样
+     *
+     * @param no
+     */
+    public void deleteNode(int no) {
+        if (root == null) {
+            System.out.println("空树,删除不了哦");
+        } else {
+            if (root.no == no) {
+                root = null;
+            } else {
+                root.deleteNode(no);
+            }
+        }
     }
 
     public void showByPre() {
@@ -122,6 +146,24 @@ class Node {
         this.name = name;
     }
 
+    public void deleteNode(int no) {
+        if (this.left != null && this.left.no == no) {
+            this.left = null;
+            return;
+        }
+        if (this.right != null && this.right.no == no) {
+            this.right = null;
+            return;
+        }
+        if (this.left != null) {
+            this.left.deleteNode(no);
+        }
+        if (this.right != null) {
+            this.right.deleteNode(no);
+        }
+
+    }
+
     public void showByPre() {
         //根左右
         System.out.println(this);
@@ -176,6 +218,7 @@ class Node {
         return resultNode;
 
     }
+
 
     public Node getNodeByCenter(int no) {
         Node resultNode = null;
