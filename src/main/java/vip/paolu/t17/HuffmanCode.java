@@ -14,16 +14,97 @@ public class HuffmanCode {
     public static void main(String[] args) {
         String content = "i like like like java do you like a java";
         byte[] contentBytes = content.getBytes();
-        System.out.println(contentBytes.length);
-        List<Node> nodes = getNode(content.getBytes());
-        System.out.println(nodes);
-        Node tree = createHuffmanTree(nodes);
-        tree.preOrder();
-        getCodes(tree, "", stringBuilder);
+        //System.out.println(contentBytes.length);
+        byte[] huffmanBytes = huffmanZip(contentBytes);
+        System.out.println(Arrays.toString(huffmanBytes));
+        byte[] primaryCode = decode(huffmanCodes, huffmanBytes);
+        System.out.println(new String(primaryCode));
+    }
 
-        System.out.println("================================================");
+    private static byte[] decode(Map<Byte, String> huffmanCodes, byte[] huffmanBytes) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < huffmanBytes.length; i++) {
+            byte b = huffmanBytes[i];
+            boolean flag = (i == huffmanBytes.length - 1);
+            stringBuilder.append(byteToBitString(!flag, b));
+        }
+        System.out.println(stringBuilder);
+        HashMap<String, Byte> map = new HashMap<>();
+        for (Map.Entry<Byte, String> entry : huffmanCodes.entrySet()) {
+            map.put(entry.getValue(), entry.getKey());
+        }
+        System.out.println(map);
+        ArrayList<Byte> list = new ArrayList<>();
+        for (int i = 0; i < stringBuilder.length(); ) {
+            int count = 1;
+            boolean flag = true;
+            Byte b = null;
+            while (flag) {
+
+                String key = stringBuilder.substring(i, i + count);
+                b = map.get(key);
+                if (b == null) {
+                    count++;
+                } else {
+                    flag = false;
+                }
+            }
+            list.add(b);
+            i += count;
+        }
+        byte[] b = new byte[list.size()];
+        for (int i = 0; i < b.length; i++) {
+            b[i] = list.get(i);
+        }
+        return b;
+    }
+
+    private static String byteToBitString(Boolean flag, byte b) {
+        int temp = b;
+        if (flag) {
+            temp |= 256;
+        }
+        String str = Integer.toBinaryString(temp);
+        if (flag) {
+            return str.substring(str.length() - 8);
+        } else {
+            return str;
+        }
+    }
+
+    private static byte[] huffmanZip(byte[] bytes) {
+        List<Node> nodes = getNode(bytes);
+        Node tree = createHuffmanTree(nodes);
+        //tree.preOrder();
         getCodes(tree, "", stringBuilder);
-        System.out.println("" + huffmanCodes);
+        //System.out.println("================================================");
+        getCodes(tree, "", stringBuilder);
+        //System.out.println("" + huffmanCodes);
+        //System.out.println("================================================");
+        byte[] huffmanCodeBytes = zip(bytes, huffmanCodes);
+        return huffmanCodeBytes;
+    }
+
+    private static byte[] zip(byte[] bytes, Map<Byte, String> huffmanCodes) {
+        StringBuilder builder = new StringBuilder();
+        for (byte b : bytes) {
+            //System.out.println("----:" + huffmanCodes.get(b));
+            builder.append(huffmanCodes.get(b));
+        }
+        int len = (builder.length() + 7) / 8;
+        byte[] huffmanCodeBytes = new byte[len];
+        int index = 0;
+        String strByte;
+        for (int i = 0; i < builder.length(); i += 8) {
+            if (i + 8 > builder.length()) {
+                strByte = builder.substring(i);
+            } else {
+                strByte = builder.substring(i, i + 8);
+            }
+            huffmanCodeBytes[index++] = (byte) Integer.parseInt(strByte, 2);
+        }
+        //System.out.println(Arrays.toString(huffmanCodeBytes));
+        return huffmanCodeBytes;
     }
 
     private static List<Node> getNode(byte[] bytes) {
@@ -71,6 +152,8 @@ public class HuffmanCode {
         }
 
     }
+
+
 }
 
 class Node implements Comparable<Node> {
