@@ -1,5 +1,6 @@
 package vip.paolu.t17;
 
+import java.io.*;
 import java.util.*;
 
 /**
@@ -12,13 +13,68 @@ public class HuffmanCode {
     static StringBuilder stringBuilder = new StringBuilder();
 
     public static void main(String[] args) {
-        String content = "i like like like java do you like a java";
-        byte[] contentBytes = content.getBytes();
-        //System.out.println(contentBytes.length);
-        byte[] huffmanBytes = huffmanZip(contentBytes);
-        System.out.println(Arrays.toString(huffmanBytes));
-        byte[] primaryCode = decode(huffmanCodes, huffmanBytes);
-        System.out.println(new String(primaryCode));
+        //String content = "i like like like java do you like a java";
+        //byte[] contentBytes = content.getBytes();
+        ////System.out.println(contentBytes.length);
+        //byte[] huffmanBytes = huffmanZip(contentBytes);
+        //System.out.println(Arrays.toString(huffmanBytes));
+        //byte[] primaryCode = decode(huffmanCodes, huffmanBytes);
+        //System.out.println(new String(primaryCode));
+
+        //zipFile("C:\\Users\\f\\Desktop\\测试\\gb5.html", "C:\\Users\\f\\Desktop\\测试\\test.zip");
+        unZipFile("C:\\Users\\f\\Desktop\\测试\\test.zip", "C:\\Users\\f\\Desktop\\测试\\resource.html");
+    }
+
+    public static void unZipFile(String zipFile, String dstFile) {
+        InputStream is = null;
+        //定义一个对象输入流
+        ObjectInputStream ois = null;
+        //定义文件的输出流
+        OutputStream os = null;
+
+        try {
+            is = new FileInputStream(zipFile);
+            ois = new ObjectInputStream(is);
+            byte[] huffmanBytes = (byte[]) ois.readObject();
+            Map<Byte, String> huffmanCodes = (Map<Byte, String>) ois.readObject();
+
+            byte[] bytes = decode(huffmanCodes, huffmanBytes);
+            os = new FileOutputStream(dstFile);
+            os.write(bytes);
+
+        } catch (Exception e) {
+        } finally {
+            try {
+                os.close();
+                ois.close();
+                is.close();
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+            }
+        }
+
+    }
+
+    public static void zipFile(String srcFile, String dstFile) {
+        OutputStream os = null;
+        ObjectOutputStream oos = null;
+        try {
+            FileInputStream is = new FileInputStream(srcFile);
+            byte[] b = new byte[is.available()];
+            is.read(b);
+            b = huffmanZip(b);
+            os = new FileOutputStream(dstFile);
+            oos = new ObjectOutputStream(os);
+            ;
+            oos.writeObject(b);
+            oos.writeObject(huffmanCodes);
+            System.out.println("压缩成功");
+            is.close();
+            os.close();
+            oos.close();
+        } catch (IOException e) {
+
+        }
     }
 
     private static byte[] decode(Map<Byte, String> huffmanCodes, byte[] huffmanBytes) {
