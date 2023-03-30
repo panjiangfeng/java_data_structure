@@ -17,7 +17,77 @@ public class BinarSortTree {
         }
         System.out.println("中序遍历二叉排序树");
         binarSortTree.infixOrder();
+        binarSortTree.delNode(10);
+        System.out.println("中序遍历二叉排序树");
+        binarSortTree.infixOrder();
 
+
+    }
+
+    public Node search(int value) {
+        if (root == null) {
+            return null;
+        } else {
+            return root.search(value);
+        }
+    }
+
+    public int delRightTree(Node node) {
+        Node target = node;
+        while (target.left != null) {
+            target = target.left;
+        }
+        delNode(target.value);
+        return target.value;
+    }
+
+    public void delNode(int value) {
+        if (root == null) {
+            return;
+        } else {
+            Node targetNode = search(value);
+            if (targetNode == null) {
+                return;
+            }
+            if (root.left == null && root.right == null) {
+                root = null;
+                return;
+            }
+            Node parentNode = searchParent(value);
+            if (targetNode.left == null && targetNode.right == null) {
+                if (parentNode.left != null && parentNode.left.value == value) {
+                    parentNode.left = null;
+                } else if (parentNode.right != null && parentNode.right.value == value) {
+                    parentNode.right = null;
+                }
+            } else if (targetNode.left != null && targetNode.right != null) {
+                int val = delRightTree(targetNode.right);
+                targetNode.value = val;
+            } else {
+                //target子节点是左子节点
+                if (targetNode.left != null) {
+                    if (parentNode.left.value == value) {
+                        parentNode.left = targetNode.left;
+                    } else {
+                        parentNode.right = targetNode.left;
+                    }
+                } else {
+                    if (parentNode.left.value == value) {
+                        parentNode.left = targetNode.right;
+                    } else {
+                        parentNode.right = targetNode.right;
+                    }
+                }
+            }
+        }
+    }
+
+    public Node searchParent(int value) {
+        if (root == null) {
+            return null;
+        } else {
+            return root.searchParent(value);
+        }
     }
 
     public void add(Node node) {
@@ -42,6 +112,37 @@ class Node {
     Node left;
     Node right;
     int value;
+
+    public Node search(int value) {
+        if (value == this.value) {
+            return this;
+        } else if (value < this.value) {
+            if (this.left == null) {
+                return null;
+            }
+            return this.left.search(value);
+        } else {
+            if (this.right == null) {
+                return null;
+            }
+            return this.right.search(value);
+        }
+    }
+
+    public Node searchParent(int value) {
+        if ((this.left != null && this.left.value == value) || (this.right != null && this.right.value == value)) {
+            return this;
+        } else {
+            if (value < this.value && this.left != null) {
+                return this.left.searchParent(value);
+            } else if (value > this.value && this.right != null) {
+                return this.right.searchParent(value);
+
+            } else {
+                return null;
+            }
+        }
+    }
 
     @Override
     public String toString() {
