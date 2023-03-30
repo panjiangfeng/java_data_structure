@@ -17,7 +17,15 @@ public class BinarSortTree {
         }
         System.out.println("中序遍历二叉排序树");
         binarSortTree.infixOrder();
+        binarSortTree.delNode(1);
+        binarSortTree.delNode(3);
+        binarSortTree.delNode(5);
+        binarSortTree.delNode(6);
+        binarSortTree.delNode(7);
         binarSortTree.delNode(10);
+        binarSortTree.delNode(12);
+        binarSortTree.delNode(9);
+        binarSortTree.delNode(2);
         System.out.println("中序遍历二叉排序树");
         binarSortTree.infixOrder();
 
@@ -64,18 +72,26 @@ public class BinarSortTree {
                 int val = delRightTree(targetNode.right);
                 targetNode.value = val;
             } else {
-                //target子节点是左子节点
                 if (targetNode.left != null) {
-                    if (parentNode.left.value == value) {
-                        parentNode.left = targetNode.left;
+                    if (parentNode != null) {
+                        if (parentNode.left.value == value) {
+                            parentNode.left = targetNode.left;
+                        } else {
+                            parentNode.right = targetNode.left;
+                        }
                     } else {
-                        parentNode.right = targetNode.left;
+                        root = targetNode.left;
                     }
+
                 } else {
-                    if (parentNode.left.value == value) {
-                        parentNode.left = targetNode.right;
+                    if (parentNode != null) {
+                        if (parentNode.left.value == value) {
+                            parentNode.left = targetNode.right;
+                        } else {
+                            parentNode.right = targetNode.right;
+                        }
                     } else {
-                        parentNode.right = targetNode.right;
+                        root = targetNode.right;
                     }
                 }
             }
