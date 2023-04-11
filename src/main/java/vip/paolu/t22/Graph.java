@@ -2,6 +2,7 @@ package vip.paolu.t22;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 /**
  * Description:
@@ -51,8 +52,11 @@ public class Graph {
         graph.showGraph();
 
         //深度遍历
-        System.out.println("深度遍历");
-        graph.DFS();
+        //System.out.println("深度遍历");
+        //graph.DFS();
+        System.out.println("广度遍历");
+        graph.BFS();
+
     }
 
     /**
@@ -63,6 +67,38 @@ public class Graph {
     public void insertVertex(String vertex) {
         vertexList.add(vertex);
         numOfEdge++;
+    }
+
+    /**
+     * 广度优先
+     */
+    public void BFS() {
+        for (int i = 0; i < numOfVertex; i++) {
+            BFS(isVisited, i);
+        }
+    }
+
+    public void BFS(boolean[] isVisited, int i) {
+        //有必要说一下为啥这里要用队列,因为广度优先要回溯
+        int u;//队列头
+        int w;//下一个存在的节点
+        LinkedList queue = new LinkedList();
+        //展示第一个
+        System.out.println(getValueByIndex(i) + "=>");
+        isVisited[i] = true;
+        //加入队列
+        queue.add(i);
+        while (!queue.isEmpty()) {
+            u = (Integer) queue.removeFirst();
+            w = getFirstNeighbor(u);
+            while (w != -1) {
+                if (!isVisited[w]) {
+                    isVisited[w] = true;
+                    queue.addLast(w);
+                }
+                w = getNexthbor(u, w);
+            }
+        }
     }
 
     /**

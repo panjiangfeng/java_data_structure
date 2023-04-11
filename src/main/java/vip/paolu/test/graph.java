@@ -42,8 +42,8 @@ public class graph {
 
 
         //深度遍历
-        System.out.println("深度遍历");
-        Graph.DFS();
+        //System.out.println("深度遍历");
+        //Graph.DFS();
         System.out.println("广度遍历");
 
 
